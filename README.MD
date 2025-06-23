@@ -1,3 +1,8 @@
+URL: https://jobs-api-wtzq.onrender.com/
+
+To see the api-docs got to 
+https://jobs-api-wtzq.onrender.com/api-docs
+
 #### Setup
 
 ```bash

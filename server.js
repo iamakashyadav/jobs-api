@@ -3,6 +3,10 @@ const express = require('express');
 
 const cors = require('cors');
 const helmet = require('helmet');
+// swagger import
+const swaggerUI = require('swagger-ui-express');
+const YAML = require('yamljs');
+const swaggerDocument = YAML.load('./swagger.yaml');
 
 const authRouter = require('./routes/auth');
 const jobRouter = require('./routes/jobs');
@@ -23,8 +27,11 @@ app.use(cors());
 
 // routes
 app.get('/', (req, res) => {
-  res.send('jobs api');
+  res.send('<h1><a href="/api-docs">Go To Swagger API docs</a></h1>');
 });
+
+// to get the swagger api docs
+app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerDocument));
 
 app.use('/api/v1/auth', authRouter);
 app.use('/api/v1/jobs', authMiddelware, jobRouter);
