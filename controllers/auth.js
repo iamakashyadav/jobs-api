@@ -2,7 +2,7 @@ const { StatusCodes } = require("http-status-codes");
 const User = require("../models/User");
 const bycrpt = require('bcryptjs');
 const jwt = require("jsonwebtoken");
-const { BadRequestError, UnauthenticatedError } = require("../errors");
+const { UnauthenticatedError } = require("../errors");
 
 const getHashedPassword = async (password) => {
     const salt = await bycrpt.genSalt(10);
@@ -32,10 +32,6 @@ const register = async (req, res) => {
 
 const login = async (req, res) => {
     const { email, password } = req.body;
-
-    if (!email || !password) {
-        throw new BadRequestError('Please provide email and password');
-    }
 
     // find user by email
     const user = await User.findOne({ email });
