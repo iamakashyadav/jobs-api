@@ -27,7 +27,7 @@ app.use(cors());
 
 // routes
 app.get('/', (req, res) => {
-  res.send('<h1><a href="/api-docs">Go To Swagger API docs</a></h1>');
+  res.redirect('/api-docs');
 });
 
 // to get the swagger api docs

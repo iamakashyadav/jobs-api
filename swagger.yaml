@@ -5,8 +5,8 @@ info:
   description: API for user authentication and job management.
 
 servers:
-  - url: http://localhost:3000/api/v1
   - url: https://jobs-api-wtzq.onrender.com/api/v1
+  - url: http://localhost:3000/api/v1
 
 tags:
   - name: Auth
