@@ -1,6 +1,6 @@
-const Joi = require('joi');
+import Joi from 'joi';
 
-module.exports = Joi.object({
+export default Joi.object({
     company: Joi.string().min(3).max(50).required().messages({
         'string.min': 'company must be at least 6 characters',
         'string.max': 'company must be less than 50 characters'

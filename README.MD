@@ -27,3 +27,13 @@ Email Validation Regex
 ```regex
 /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
 ```
+
+
+#### package.json
+## continous transpile the ts code to js  if something change and run the server.js in watch mode
+```
+"my-dev": "tsc --watch && node --watch dist/server.js",
+```
+
+## 
+"dev": "ts-node-dev --respawn --transpile-only src/server.ts",

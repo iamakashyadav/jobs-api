@@ -1,6 +1,6 @@
-const Joi = require('joi');
+import Joi from 'joi';
 
-module.exports = Joi.object({
+export default Joi.object({
   email: Joi.string().email().required().messages({
     'string.email': 'Email must be valid',
     'any.required': 'Email is required'

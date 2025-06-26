@@ -1,6 +1,13 @@
-const mongoose = require('mongoose');
+import mongoose, { Document, Schema, Types } from 'mongoose';
 
-const JobSchema = mongoose.Schema(
+export interface IJob extends Document {
+    company: string;
+    position: string;
+    status: 'interview' | 'pending' | 'declined';
+    createdBy: Types.ObjectId;
+}
+
+const JobSchema = new Schema<IJob>(
     {
         company: {
             type: String,
@@ -20,14 +27,15 @@ const JobSchema = mongoose.Schema(
             default: 'pending',
         },
         createdBy: {
-            type: mongoose.Types.ObjectId,
+            type: Schema.Types.ObjectId,
             ref: 'User',
             required: [true, 'Please provide user'],
-        }
+        },
     },
-    { // this will by default create to col created_at & updated_at
-        timestamps: true
-    },
+    {
+        timestamps: true,
+    }
 );
 
-module.exports = mongoose.model('Job', JobSchema);
+const Job = mongoose.model<IJob>('Job', JobSchema);
+export default Job;
