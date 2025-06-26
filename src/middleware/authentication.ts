@@ -17,10 +17,10 @@ const auth = async (req: Request, res: Response, next: NextFunction) => {
     }
 
     try {
-        const payload = jwt.verify(token, JWT_SECRET_KEY);
+        const payload: any = jwt.verify(token, JWT_SECRET_KEY);
 
         const user = User.findById(payload.id).select('-password');
-        req.user = { userId: payload.userId, name: payload.name };
+        (req as any).user = { userId: payload.userId, name: payload.name };
 
         next();
     } catch (error) {
