@@ -1,13 +1,14 @@
-const { StatusCodes } = require("http-status-codes");
-const Job = require("../models/Job");
-const { NotFoundError } = require("../errors");
+import { Request, Response } from "express";
+import { StatusCodes } from "http-status-codes";
+import { NotFoundError } from "../errors";
+import Job from "../models/Job";
 
-const getJobs = async (req, res) => {
+const getJobs = async (req: Request, res: Response) => {
     const jobs = await Job.find({ createdBy: req.user.userId }).sort('updatedAt');
     res.status(StatusCodes.OK).json({ jobs, count: jobs.length });
 }
 
-const getJob = async (req, res) => {
+const getJob = async (req: Request, res: Response) => {
     const job = await Job.findOne({ createdBy: req.user.userId, _id: req.params.id });
     if (!job) {
         throw new NotFoundError("Job Not Found");
@@ -15,12 +16,12 @@ const getJob = async (req, res) => {
     res.status(StatusCodes.OK).json({ job });
 }
 
-const createJob = async (req, res) => {
+const createJob = async (req: Request, res: Response) => {
     const job = await Job.create({ ...req.body, createdBy: req.user.userId });
     res.status(StatusCodes.CREATED).json({ job });
 }
 
-const updateJob = async (req, res) => {
+const updateJob = async (req: Request, res: Response) => {
     const job = await Job.findOneAndUpdate({ _id: req.params.id, createdBy: req.user.userId }, req.body, {
         new: true,
         runValidators: true,
@@ -31,7 +32,7 @@ const updateJob = async (req, res) => {
     res.status(StatusCodes.OK).json({ job });
 }
 
-const deleteJob = async (req, res) => {
+const deleteJob = async (req: Request, res: Response) => {
     const job = await Job.findByIdAndDelete(req.params.id);
     if (!job) {
         throw new NotFoundError("Job Not Found");
@@ -39,7 +40,7 @@ const deleteJob = async (req, res) => {
     res.status(StatusCodes.OK).json({ job });
 }
 
-module.exports = {
+export {
     getJobs,
     getJob,
     createJob,

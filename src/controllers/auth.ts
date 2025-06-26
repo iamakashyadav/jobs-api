@@ -1,25 +1,16 @@
-const { StatusCodes } = require("http-status-codes");
-const User = require("../models/User");
-const bycrpt = require('bcryptjs');
-const jwt = require("jsonwebtoken");
-const { UnauthenticatedError } = require("../errors");
+import { Request, Response } from "express";
+import { StatusCodes } from "http-status-codes";
+import jwt from "jsonwebtoken";
+import bycrpt from "bcryptjs";
+import { UnauthenticatedError } from "../errors";
+import User from "../models/User";
 
-const getHashedPassword = async (password) => {
-    const salt = await bycrpt.genSalt(10);
-    return await bycrpt.hash(password, salt);
-}
-
-const createJWT = (payload) => {
+const createJWT = (payload: any) => {
     return jwt.sign(payload, process.env.JWT_SECRET_KEY, { expiresIn: process.env.JWT_LIFETIME });
 }
 
-const register = async (req, res) => {
+const register = async (req: Request, res: Response) => {
     const { name, email, password } = req.body;
-
-    // *****so in schema we have use middelware which will hashed the password before saving to db *****
-    // that's why i have comment the code
-    // const hashedPassword = await getHashedPassword(password);
-    // const user = await User.create({ name, email, password: hashedPassword });
 
     // create user
     const user = await User.create({ name, email, password });
@@ -30,7 +21,7 @@ const register = async (req, res) => {
     res.status(StatusCodes.CREATED).json({ user: { name: user.name }, token });
 }
 
-const login = async (req, res) => {
+const login = async (req: Request, res: Response) => {
     const { email, password } = req.body;
 
     // find user by email
@@ -48,7 +39,7 @@ const login = async (req, res) => {
     res.status(StatusCodes.OK).send({ user: { name: user.name }, token });
 }
 
-module.exports = {
+export {
     register,
-    login
-};
+    login,
+}

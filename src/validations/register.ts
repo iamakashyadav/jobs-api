@@ -1,6 +1,6 @@
-const Joi = require('joi');
+import Joi from 'joi';
 
-module.exports = Joi.object({
+export default Joi.object({
     name: Joi.string().min(3).max(50).required().messages({
         'string.min': 'name must be at least 6 characters',
         'string.max': 'name must be less than 50 characters'
